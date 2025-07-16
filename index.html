@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD. ABIR HOSSAIN SHANTO - CV</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #fdf2f8; /* Light theme background */
+            color: #4a5568; /* Light theme text color */
+            overflow-x: hidden; /* Prevent horizontal scroll when sidebar is open */
+        }
+        /* Custom styles for image boxes as per the reference image */
+        .image-box {
+            height: 120px; /* Smaller height for consistency */
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Hide overflow if image is larger than box */
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .image-box:hover {
+            transform: scale(1.05);
+        }
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Changed from contain to cover as per user's previous request to remove white bars */
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px; /* Hidden by default */
+            width: 280px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: left 0.3s ease-in-out;
+            padding-top: 5rem; /* Space for the top bar */
+            overflow-y: auto; /* Enable scrolling for long content */
+            display: flex; /* Use flexbox for internal layout */
+            flex-direction: column; /* Stack items vertically */
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
+        }
+
+        .hamburger-button {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001; /* Above sidebar overlay */
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex; /* Ensure it's displayed by default */
+            flex-direction: column;
+            justify-content: space-around;
+            width: 40px;
+            height: 40px;
+            transition: opacity 0.3s ease; /* Smooth transition for hiding/showing */
+        }
+
+        .hamburger-line {
+            width: 100%;
+            height: 4px;
+            background-color: #333;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Animation for hamburger to close icon */
+        .hamburger-button.open .hamburger-line:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+        .hamburger-button.open .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-button.open .hamburger-line:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+        }
+
+        /* Modal Overlay Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            padding: 0.5rem;
+            cursor: pointer;
+            color: white;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-close-button:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* New styles for top navigation buttons */
+        .top-nav-buttons {
+            position: fixed;
+            top: 1rem;
+            left: 50%; /* Centered horizontally */
+            transform: translateX(-50%); /* Adjust for exact centering */
+            z-index: 998; /* Below sidebar, above content */
+            display: flex;
+            gap: 0.75rem; /* Space between buttons */
+            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* Pill shape */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+            transition: opacity 0.3s ease; /* Smooth transition for hiding/showing */
+        }
+
+        .top-nav-button {
+            padding: 0.5rem 1.25rem; /* Increased padding for better look */
+            background-color: #4f46e5; /* Indigo-700 for a bolder look */
+            color: white;
+            font-weight: 600; /* Semibold */
+            border-radius: 9999px; /* Pill shape */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            white-space: nowrap; /* Prevent text wrapping */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .top-nav-button:hover {
+            background-color: #3730a3; /* Darker indigo on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* More pronounced shadow on hover */
+        }
+
+        /* Hide buttons on smaller screens if they overlap too much */
+        @media (max-width: 768px) {
+            .top-nav-buttons {
+                display: none; /* Hide on small screens to avoid clutter */
+            }
+        }
+
+        /* Custom style for minimalistic Notable Mentions button */
+        .notable-mentions-button {
+            background-color: transparent; /* No color */
+            color: #4a5568; /* Text color */
+            border: 1px solid #cbd5e0; /* Light gray border */
+            box-shadow: none; /* No shadow */
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .notable-mentions-button:hover {
+            background-color: #e0f2fe; /* Light blue on hover */
+            border-color: #90cdf4; /* Lighter blue border on hover */
+            color: #2b6cb0; /* Darker blue text on hover */
+        }
+
+        /* Styles for the image carousel */
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%; /* Each slide takes full width */
+            box-sizing: border-box;
+            height: 320px; /* Fixed height for consistency */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensure image fits within the slide */
+        }
+
+        .carousel-dot-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #cbd5e0; /* Light gray for inactive dots */
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background-color: #4f46e5; /* Indigo for active dot */
+        }
+    </style>
+</head>
+<body class="bg-amber-50 text-gray-800">
+
+    <!-- Hamburger Menu Button -->
+    <button id="hamburgerButton" class="hamburger-button">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+    </button>
+
+    <!-- Top Navigation Buttons -->
+    <div id="topNavButtons" class="top-nav-buttons">
+        <!-- Buttons will be dynamically added here by JavaScript -->
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <nav class="p-4 flex flex-col h-full">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">Navigation</h3>
+            <ul class="space-y-2 flex-grow">
+                <!-- Notable Mentions button re-added with minimalistic style -->
+                <li>
+                    <a href="#" class="inline-flex items-center px-4 py-2 w-full justify-center border border-transparent text-base font-medium rounded-md shadow-sm transition duration-300 notable-mentions-button" onclick="closeSidebarAndRenderNotableMentionsPage()">
+                        Notable Mentions
+                    </a>
+                </li>
+            </ul>
+            <!-- Resume Button moved to the bottom -->
+            <ul class="mt-auto space-y-2">
+                <li>
+                    <a href="YOUR_RESUME_DOWNLOAD_LINK_HERE" target="_blank" class="inline-flex items-center px-4 py-2 mt-4 w-full justify-center border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300" onclick="toggleSidebar()">
+                        <svg class="-ml-0.5 mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L10 11.586l1.293-1.293a1 1 0 111.414 1.414l-2 2a1 1 0 01-1.414 0l-2-2a1 1 0 010-1.414zM10 3a1 1 0 011 1v7a1 1 0 11-2 0V4a1 1 0 011-1z" clip-rule="evenodd" />
+                        </svg>
+                        Resume
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <div id="app-container" class="min-h-screen flex flex-col items-center pt-20 pb-10 px-4 sm:px-6 lg:px-8">
+        <!-- Content will be rendered here by JavaScript -->
+    </div>
+
+    <script>
+        // Global variable to store the currently zoomed image URL
+        let zoomedImage = null;
+        let currentSlideIndex = 0; // For carousel
+
+        // Function to zoom in on an image
+        function zoomInImage(imageUrl) {
+            zoomedImage = imageUrl;
+            renderModal();
+        }
+
+        // Function to zoom out (close the modal)
+        function zoomOutImage() {
+            zoomedImage = null;
+            document.getElementById('modal-root').remove(); // Remove the modal from DOM
+        }
+
+        // Function to render the modal
+        function renderModal() {
+            let modalRoot = document.getElementById('modal-root');
+            if (!modalRoot) {
+                modalRoot = document.createElement('div');
+                modalRoot.id = 'modal-root';
+                document.body.appendChild(modalRoot);
+            }
+
+            if (zoomedImage) {
+                modalRoot.innerHTML = `
+                    <div class="modal-overlay">
+                        <div class="modal-content">
+                            <button class="modal-close-button" onclick="zoomOutImage()">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            <img src="${zoomedImage}" alt="Zoomed Image" class="modal-image" onerror="this.onerror=null; this.src='https://placehold.co/600x400/ADD8E6/000000?text=Image+Not+Found';">
+                        </div>
+                    </div>
+                `;
+            } else {
+                modalRoot.innerHTML = '';
+            }
+        }
+
+        // Function to move carousel slides
+        function moveSlides(n, images) {
+            currentSlideIndex += n;
+            if (currentSlideIndex >= images.length) {
+                currentSlideIndex = 0;
+            }
+            if (currentSlideIndex < 0) {
+                currentSlideIndex = images.length - 1;
+            }
+            updateCarousel(images);
+        }
+
+        // Function to update carousel display
+        function updateCarousel(images) {
+            const track = document.querySelector('.carousel-track');
+            if (track) {
+                track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+                const dots = document.querySelectorAll('.carousel-dot');
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlideIndex);
+                });
+            }
+        }
+
+        // Auto-slide function for carousel
+        let autoSlideInterval;
+        function startAutoSlide(images) {
+            clearInterval(autoSlideInterval); // Clear any existing interval
+            autoSlideInterval = setInterval(() => {
+                moveSlides(1, images);
+            }, 3000); // Change image every 3 seconds
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // CV data
+        const cvData = {
+            name: "MD. ABIR HOSSAIN SHANTO",
+            title: "Business Enthusiast",
+            contact: {
+                phone: "+8801558194482",
+                email: "abir.157shanto@gmail.com",
+                linkedin: "linkedin.com/in/abirhshanto", // Updated LinkedIn URL
+                facebook: "facebook.com/abirhshanto",
+                location: "Dhaka, Bangladesh"
+            },
+            careerObjective: "Motivated business student passionate about leadership, communication, and excellence. Seeking a Campus Ambassador role to promote organizational initiatives, engage peers and foster brand presence on campus.",
+            education: [
+                {
+                    id: 'bup', // Added unique ID for easier referencing
+                    institution: "Bangladesh University of Professionals (BUP)",
+                    years: "2024-28",
+                    degree: "BBA-General",
+                    gpa: null,
+                    logo: "bup.png", // Default logo for home page
+                    details: [
+                        "Bachelor of Business Administration - General", // Updated for BUP details page
+                        "Total CGPA: 4.00", // Added for BUP details page
+                        {
+                            semester: "1st semester",
+                            cgpa: "4.00",
+                            courses: [
+                                { code: "GED1101", name: "Introduction to Business", credit: "3.00" },
+                                { code: "ALD1101", name: "Business Mathematics", credit: "3.00" },
+                                { code: "GED1102", name: "Bangladesh Studies", credit: "3.00" },
+                                { code: "ACC1101", name: "Principles of Accounting", credit: "3.00" },
+                                { code: "GED1103", name: "Professional Ethics and Psychology", credit: "3.00" }
+                            ],
+                            totalCredit: "15.00"
+                        },
+                        {
+                            semester: "2nd semester",
+                            cgpa: "4.00",
+                            courses: [
+                                { code: "ALD1201", name: "Business Communication", credit: "3.00" },
+                                { code: "FIN1201", name: "Principles of Finance", credit: "3.00" },
+                                { code: "GED1201", name: "Functional English and Presentation Skill Development", credit: "3.00" },
+                                { code: "HRM1201", name: "Principles of Management", credit: "3.00" },
+                                { code: "MKT1201", name: "Principles of Marketing", credit: "3.00" }
+                            ],
+                            totalCredit: "15.00"
+                        },
+                        {
+                            semester: "3rd semester",
+                            cgpa: "Running",
+                            courses: [
+                                { code: "ALD2103", name: "Business Statistics I", credit: "3.00" },
+                                { code: "ACC2102", name: "Intermediate Accounting", credit: "3.00" },
+                                { code: "ALD2104", name: "Microeconomics", credit: "3.00" },
+                                { code: "FIN2102", name: "Financial Management", credit: "3.00" },
+                                { code: "MIS2101", name: "Management Information Systems", credit: "3.00" }
+                            ],
+                            totalCredit: "15.00" // Assuming total credit for 3rd sem is also 15.00
+                        },
+                        { semester: "4th semester", cgpa: "N/A", courses: [], totalCredit: "N/A" },
+                        { semester: "5th semester", cgpa: "N/A", courses: [], totalCredit: "N/A" },
+                        { semester: "6th semester", cgpa: "N/A", courses: [], totalCredit: "N/A" },
+                        { semester: "7th semester", cgpa: "N/A", courses: [], totalCredit: "N/A" },
+                        { semester: "8th semester", cgpa: "N/A", courses: [], totalCredit: "N/A" }
+                    ]
+                },
+                {
+                    id: 'rajuk', // Added unique ID for easier referencing
+                    institution: "Rajuk Uttara Model College",
+                    years: "2018-2022",
+                    degree: "Business Studies", // This will be replaced by HSC
+                    achievement: null, // This will be replaced by "*Stood 129th in Dhaka board"
+                    logo: "rajuk.png", // Rajuk logo filename
+                    details: [
+                        "Business Studies",
+                        "2018-2022"
+                    ]
+                }
+            ],
+            experience: [
+                {
+                    id: 'sheba_bondhu', // Added unique ID for this experience
+                    title: "Sheba Bondhu Campus Ambassador", // Changed text here
+                    organization: "Sheba Platform Limited",
+                    years: "2025 - Present",
+                    logo: "sheba.png", // Added logo for Sheba
+                    details: { // Updated details structure for the details page
+                        image: "image_eb9b39.png", // Placeholder image for the left column
+                        linkedinPostLink: "https://www.linkedin.com/posts/abirhshanto_campusambassador-studentleadership-youthinitiative-activity-7346605317335506946-rC93?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFSGxQYBcVCx5uiDPeYRiR1BJkbpHdtJ8E8", // New LinkedIn post link
+                        sections: [
+                            {
+                                heading: "Overview", // Changed from Campus Ambassador to Overview
+                                content: {
+                                    introduction: "I'm excited to share that I've been officially selected as a Campus Ambassador for the Sheba Bondhu Program - Batch 1! This opportunity marks the beginning of an inspiring journey where I'll be representing Sheba Platform LTD on campus, driving initiatives that bridge tech-driven services with community impact.",
+                                    organizationLink: "https://facebook.com/ShebaPlatformLimited"
+                                }
+                            },
+                            {
+                                heading: "Key Responsibilities",
+                                content: {
+                                    points: [
+                                        "Promote Sheba Platform's services and brand awareness among university students.",
+                                        "Organize and execute on-campus events, workshops, and promotional activities.",
+                                        "Gather feedback from students to help improve Sheba Platform's offerings.",
+                                        "Act as a liaison between Sheba Platform and the student community."
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'event_manager', // New unique ID for this experience
+                    title: "Event Manager", // Changed text to 'Event Manager'
+                    organization: "Endeavor",
+                    years: "2020 - 2022",
+                    logo: "endeavor.png", // Placeholder for Endeavor logo
+                    details: { // Updated details structure for the details page
+                        images: [ // Changed to 'images' array for carousel
+                            "image_eb17f8.png", // Original image
+                            "end2.png", // New image 2
+                            "end3.png", // New image 3
+                            "end4.png"  // New image 4
+                        ],
+                        date: "May 21, 2021", // Date for the image (can be generalized or removed if not applicable to all)
+                        sections: [
+                            {
+                                heading: "Overview",
+                                content: {
+                                    text: "As an Event Manager at Endeavor, I was responsible for orchestrating various events, from planning and coordination to execution. My role involved ensuring seamless operations and creating memorable experiences for participants."
+                                }
+                            },
+                            {
+                                heading: "Key Contributions",
+                                content: {
+                                    points: [
+                                        "Successfully managed and executed 5+ major events, including workshops and seminars.",
+                                        "Coordinated with vendors, sponsors, and volunteers to ensure smooth event flow.",
+                                        "Developed promotional strategies that increased event attendance by an average of 20%.",
+                                        "Managed event budgets, ensuring cost-effectiveness and resource optimization."
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            software: [
+                "Microsoft Excel",
+                "Microsoft Word",
+                "Canva",
+                "Adobe Photoshop",
+                "Camtasia 2019"
+            ],
+            language: [
+                "English (Fluent)",
+                "Bangla (Fluent)"
+            ],
+            achievements: [ // Re-added achievements array
+                {
+                    id: 'general_member_bup_finance',
+                    title: "General Member",
+                    organization: "BUP Finance Society",
+                    years: "2024 - Present",
+                    logo: "fs.png", // Renamed to fs.png
+                    details: {
+                        image: "member.png", // Renamed to member.png
+                        joiningDate: "November 2024", // New joining date
+                        link: "www.facebook.com/photo/?fbid=959058839582825&set=pcb.959062802915762", // Link for the image
+                        sections: [
+                            {
+                                heading: "Overview",
+                                content: {
+                                    text: "As a General Member of the BUP Finance Society, I actively participate in various finance-related activities, workshops, and discussions, contributing to the society's goals and enhancing my financial knowledge."
+                                }
+                            },
+                            {
+                                heading: "Contributions",
+                                content: {
+                                    points: [
+                                        "Attended and contributed to weekly meetings and brainstorming sessions.",
+                                        "Assisted in organizing finance-related events and seminars.",
+                                        "Engaged in discussions on current financial trends and market analysis."
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'joint_secretary_rcbc',
+                    title: "Joint Secretary",
+                    organization: "Rajuk College Business Club",
+                    years: "2021-2022",
+                    logo: "rcbc.png", // Changed to rcbc.png
+                    details: {
+                        images: [ // Adding images for this section
+                            "ser1.png", // Renamed
+                            "ser2.png",  // Renamed
+                            "ser3.png"   // Added new image
+                        ],
+                        sections: [
+                            {
+                                heading: "Overview",
+                                content: {
+                                    text: "As Joint Secretary of the Rajuk College Business Club, I played a key role in organizing various club activities and events, fostering a vibrant business community among students."
+                                }
+                            },
+                            {
+                                heading: "Key Responsibilities",
+                                content: {
+                                    points: [
+                                        "Assisted in planning and executing club events and workshops.",
+                                        "Managed club communications and membership records.",
+                                        "Supported the President in administrative tasks and club initiatives."
+                                    ]
+                                }
+                            }
+                        ],
+                        certificationLink: "#" // Changed to "#" to make it non-functional
+                    }
+                },
+                {
+                    id: 'college_sergeant',
+                    title: "College Sergeant",
+                    organization: "Rajuk Uttara Model College",
+                    years: "2021-2022",
+                    logo: "star.png", // New logo filename
+                    details: {
+                        images: [ // For the collage - Updated to use the specific image paths
+                            "sec1.png", // Renamed
+                            "sec2.png", // Renamed
+                            "sec3.png"
+                        ],
+                        sections: [ // Added sections for College Sergeant details
+                            {
+                                heading: "Overview of Rank",
+                                content: {
+                                    text: "The rank of College Sergeant signifies a senior leadership position within the college, responsible for maintaining discipline and assisting faculty in various administrative and event management duties. It demands strong leadership, organizational skills, and a commitment to upholding the college's values."
+                                }
+                            },
+                            {
+                                heading: "My Responsibilities as College Sergeant",
+                                content: {
+                                    points: [
+                                        "Commanded cadet platoons during parades and drills.",
+                                        "Assisted in coordinating major college events, including annual sports and cultural programs.",
+                                        "Maintained discipline and fostered a sense of responsibility among students."
+                                    ]
+                                }
+                            },
+                            {
+                                heading: "Impact and Learning",
+                                content: {
+                                    text: "Serving as College Sergeant was a transformative experience. It significantly enhanced my leadership capabilities, problem-solving skills under pressure, and ability to manage large groups. I learned the importance of meticulous planning, effective communication, and leading by example, which are invaluable lessons for future endeavors. The role instilled a deep sense of discipline and responsibility."
+                                }
+                            }
+                        ],
+                        certificationLink: "https://linkedin.com/in/abirhshanto/details/certifications/1746377634757/single-media-viewer/?profileId=ACoAAFSGxQYBcVCx5uiDPeYRiR1BJkbpHdtJ8E8" // Updated link
+                    }
+                }
+            ],
+            certificates: [ // New Certificates section
+                {
+                    id: 'ms_excel_cert',
+                    title: "Introduction to MS Excel",
+                    issuer: "Coursera",
+                    year: null,
+                    link: "https://coursera.org/account/accomplishments/verify/24OSRMREE7LD", // Updated link here
+                    logo: "excel.png", // Assuming this is the correct logo filename
+                    details: {
+                        image: "image_11c067.jpg", // Using the provided image for the certificate
+                        sections: [
+                            {
+                                // This section is not directly rendered in the new simplified layout
+                                heading: "Course Overview",
+                                content: {
+                                    text: "This comprehensive course provided a foundational understanding of Microsoft Excel, a critical tool for data organization, analysis, and visualization. I gained hands-on experience in navigating the Excel interface, performing essential calculations, managing datasets, and presenting information effectively through various charting techniques. The curriculum emphasized practical application, enabling me to efficiently handle real-world data scenarios."
+                                }
+                            },
+                            {
+                                heading: "Key Learning Outcomes",
+                                content: {
+                                    points: [
+                                        "Basic spreadsheet functions",
+                                        "Data entry and formatting",
+                                        "Using formulas and functions",
+                                        "Creating charts"
+                                    ]
+                                }
+                            },
+                            {
+                                heading: "Projects/Work Samples", // New section for work samples
+                                content: {
+                                    text: "No work to show"
+                                }
+                            },
+                            {
+                                heading: "Verification",
+                                content: {
+                                    link: "https://coursera.org/account/accomplishments/verify/24OSRMREE7LD" // Ensure this is the correct link
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 'data_analytics_cert',
+                    title: "Introduction to Career Skills in Data Analytics",
+                    issuer: "LinkedIn Learning",
+                    year: null, // Removed year
+                    link: "https://www.linkedin.com/learning/certificates/46d36501a417f5d8022b27b496b6d0f25ed06834ca9b63ae3e3b542e2aad45cd?trk=share_certificate", // UPDATED LINK HERE
+                    logo: "ana.png",
+                    details: { // Added details for the certificate
+                        sections: [
+                            {
+                                heading: "Course Overview",
+                                content: {
+                                    text: "This course focused on foundational career skills essential for aspiring data analysts. It covered key concepts in data analysis, problem-solving methodologies, and effective communication of data insights."
+                                }
+                            },
+                            {
+                                heading: "Key Learning Outcomes",
+                                content: {
+                                    points: [
+                                        "Developed an understanding of the data analysis lifecycle.",
+                                        "Improved problem-solving skills using data-driven approaches.",
+                                        "Learned to interpret and and present data effectively to various audiences.",
+                                        "Gained insights into common tools and techniques used in data analytics."
+                                    ]
+                                }
+                            },
+                            {
+                                heading: "Projects/Work Samples", // New section for work samples
+                                content: {
+                                    text: "No work to show"
+                                }
+                            },
+                            {
+                                heading: "Verification",
+                                content: {
+                                    link: "https://coursera.org/account/accomplishments/verify/46d36501a417f5d8022b27b496b6d0f25ed06834ca9b63ae3e3b542e2aad45cd?trk=share_certificate" // UPDATED LINK HERE
+                                }
+                            }
+                        ]
+                    }
+                }
+            ],
+            notableMentions: [ // New section for Notable Mentions
+                {
+                    id: 'creator_bup_cgpa_calculator', // New unique ID
+                    title: "Creator",
+                    organizer: "BUP CGPA Calculator",
+                    description: "Despite having no prior experience in programming, I developed and launched a comprehensive CGPA calculator tailored to the unique structure of the BUP curriculum—entirely with the help of AI. This tool calculates in-course marks, required scores, and projected CGPA, allowing students to plan their academic journey with clarity and confidence. Since its release, it has empowered over 2,000 BUP students to track and improve their performance, proving that with the right guidance and determination, impact is within reach.",
+                    link: "https://cgpacalcbup.netlify.app" // Updated link
+                },
+                {
+                    id: 'rajuk_natura_enlight_22', // Unique ID
+                    title: "Organizer", // Renamed from "Rajuk NaturEnlight'22"
+                    organizer: "Rajuk NaturEnlight'22 presented by NAVANA & ICT Division", // New field for organizer
+                    description: "Rajuk NaturEnlight’22 — A proud moment for our organizing journey.\nThis Certificate of Appreciation awarded to celebrates successful leadership and team coordination in bringing NaturEnlight’22 to life—a signature event powered by the ICT Division and sponsored by NAVANA. With endorsement from institutional leaders and the support of Rajuk College Earth and Nature Club, this recognition echoes the values of initiative, environmental engagement, and collaborative impact.",
+                    link: "https://facebook.com/photo?fbid=1724146861317043&set=a.349847382080338" // Updated link
+                },
+                {
+                    id: 'notable_mention_2',
+                    title: "Organizer", // Renamed from "Notable Mention 2"
+                    organizer: "Babbling Business: A business workshop presented by Rajuk College Business Club", // Removed "presents"
+                    description: "Babbling Business — A dynamic business workshop presented by Rajuk College Business Club (RCBC), crafted to spark entrepreneurial thinking and inspire the next generation of business leaders.\nThis workshop marked a milestone for RCBC, blending insight with interaction, and giving students a taste of real-world business ideation. With enthusiastic participation and an electric atmosphere, Babbling Business set the tone for future student-led ventures.",
+                    link: "https://www.facebook.com/share/p/1AzzACw7qr/" // Updated link here
+                }
+            ]
+        };
+
+        const appContainer = document.getElementById('app-container');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const hamburgerButton = document.getElementById('hamburgerButton');
+        const topNavButtonsContainer = document.getElementById('topNavButtons');
+
+        // Function to toggle sidebar
+        function toggleSidebar() {
+            sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+            hamburgerButton.classList.toggle('open');
+        }
+
+        // Function to close sidebar and render Notable Mentions page
+        function closeSidebarAndRenderNotableMentionsPage() {
+            toggleSidebar(); // Close sidebar
+            setTimeout(() => { // Allow sidebar to close before rendering
+                renderNotableMentionsPage();
+            }, 300); // Match sidebar transition duration
+        }
+
+        // Function to scroll to a section without toggling sidebar
+        function scrollToSection(sectionId) {
+            const targetElement = document.getElementById(sectionId);
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Event listeners for sidebar
+        hamburgerButton.addEventListener('click', toggleSidebar);
+        sidebarOverlay.addEventListener('click', toggleSidebar); // Close sidebar when clicking overlay
+
+        // Function to toggle Notable Mention dropdown (no longer used for Notable Mentions page)
+        function toggleNotableMention(elementId, arrowIconId) {
+            const contentDiv = document.getElementById(elementId);
+            const arrowIcon = document.getElementById(arrowIconId);
+            if (contentDiv) {
+                contentDiv.classList.toggle('hidden');
+                if (arrowIcon) {
+                    arrowIcon.classList.toggle('rotate-180'); // Rotate 180 degrees for dropdown
+                }
+            }
+        }
+
+
+        // Function to render the Home Page
+        function renderHomePage(scrollToId = null) {
+            appContainer.innerHTML = `
+                <!-- Introduction Section -->
+                <header class="text-center mb-12 w-full max-w-4xl bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl shadow-lg border border-blue-200">
+                    <div class="relative w-36 h-36 mx-auto mb-6 rounded-full overflow-hidden border-4 border-blue-500 shadow-xl transform transition-transform duration-300 hover:scale-105">
+                        <a href="https://linkedin.com/in/md-abir-hossain-shanto-45ab12336/" target="_blank" class="block w-full h-full">
+                            <img
+                                src="blu.png"
+                                alt="Profile"
+                                class="w-full h-full object-cover"
+                                onerror="this.onerror=null; this.src='https://placehold.co/144x144/ADD8E6/000000?text=ABIR';"
+                            />
+                        </a>
+                    </div>
+                    <h1 class="text-5xl font-extrabold text-blue-800 mb-2 leading-tight">${cvData.name}</h1>
+                    <p class="text-2xl text-gray-700 mb-6 font-semibold">${cvData.title}</p>
+                    <div class="bg-white p-5 rounded-lg shadow-inner border border-gray-200 mb-6 max-w-2xl mx-auto">
+                        <p class="text-lg text-gray-700 leading-relaxed italic">
+                            "${cvData.careerObjective}"
+                        </p>
+                    </div>
+                </header>
+
+                <!-- Sections -->
+                <section class="w-full max-w-4xl">
+                    <!-- Education Section -->
+                    <div id="education-section" class="bg-white p-8 rounded-xl shadow-lg mb-8 border border-gray-100">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4 flex items-center">
+                            <i data-lucide="graduation-cap" class="w-8 h-8 mr-3 text-blue-500"></i> Education
+                        </h2>
+                        <div class="border-b-2 border-blue-300 w-24 mb-6"></div>
+                        ${cvData.education.map((edu, index) => `
+                            <div class="mb-4 last:mb-0 border border-gray-200 rounded-lg p-4 bg-gray-50 hover:shadow-md transition duration-300 transform hover:-translate-y-1">
+                                <div class="flex items-center">
+                                    <div class="w-20 h-20 mr-4 flex-shrink-0 cursor-pointer p-2 bg-white rounded-lg shadow-sm"
+                                        onclick="renderDetailsPage('Education', cvData.education[${index}], 'education-section')">
+                                        <img
+                                            src="${edu.logo}"
+                                            alt="${edu.institution} logo"
+                                            class="w-full h-full object-contain"
+                                            onerror="this.onerror=null; this.src='https://placehold.co/80x80/ADD8E6/000000';"
+                                        />
+                                    </div>
+                                    <div>
+                                        <h3
+                                            class="text-xl font-semibold text-gray-900 cursor-pointer hover:text-blue-600 transition duration-300 hover:translate-x-1"
+                                            onclick="renderDetailsPage('Education', cvData.education[${index}], 'education-section')"
+                                        >
+                                            ${edu.institution}
+                                        </h3>
+                                        ${edu.degree ? `<p class="text-md text-gray-700">${edu.degree}</p>` : ''}
+                                        ${edu.gpa ? `<p class="text-md text-gray-700">GPA: ${edu.gpa}</p>` : ''}
+                                        ${edu.achievement ? `<p class="text-md text-gray-700">${edu.achievement}</p>` : ''}
+                                        <p class="text-md text-gray-600">${edu.years}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Experience Section -->
+                    <div id="experience-section" class="bg-white p-8 rounded-xl shadow-lg mb-8 border border-gray-100">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4 flex items-center">
+                            <i data-lucide="briefcase" class="w-8 h-8 mr-3 text-blue-500"></i> Experience
+                        </h2>
+                        <div class="border-b-2 border-blue-300 w-24 mb-6"></div>
+                        ${cvData.experience.map((exp, index) => `
+                            <div class="mb-4 last:mb-0 border border-gray-200 rounded-lg p-4 bg-gray-50 hover:shadow-md transition duration-300 transform hover:-translate-y-1">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-20 h-20 mr-4 flex-shrink-0 cursor-pointer p-2 bg-white rounded-lg shadow-sm"
+                                            onclick="renderDetailsPage('Experience', cvData.experience[${index}], 'experience-section')">
+                                            <img
+                                                src="${exp.logo || 'https://placehold.co/80x80/ADD8E6/000000'}"
+                                                alt="${exp.organization} logo"
+                                                class="w-full h-full object-contain"
+                                                onerror="this.onerror=null; this.src='https://placehold.co/80x80/ADD8E6/000000';"
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-semibold text-gray-900 cursor-pointer hover:text-blue-600 transition duration-300 hover:translate-x-1"
+                                                onclick="renderDetailsPage('Experience', cvData.experience[${index}], 'experience-section')">
+                                                ${exp.title}
+                                            </h3>
+                                            ${exp.id === 'sheba_bondhu' ? `
+                                                <a href="https://facebook.com/ShebaPlatformLimited" target="_blank" class="text-md text-gray-600 hover:underline hover:text-blue-600">${exp.organization}</a>
+                                            ` : exp.id === 'event_manager' ? `
+                                                <a href="https://facebook.com/Endeavor.bangladesh" target="_blank" class="text-md text-gray-600 hover:underline hover:text-blue-600">${exp.organization}</a>
+                                            ` : `
+                                                <p class="text-md text-gray-600">${exp.organization}</p>
+                                            `}
+                                        </div>
+                                    </div>
+                                    <p class="text-md text-gray-600">${exp.years}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Involvements Section -->
+                    <div id="achievements-section" class="bg-white p-8 rounded-xl shadow-lg mb-8 border border-gray-100">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4 flex items-center">
+                            <i data-lucide="handshake" class="w-8 h-8 mr-3 text-blue-500"></i> Involvements
+                        </h2>
+                        <div class="border-b-2 border-blue-300 w-24 mb-6"></div>
+                        ${cvData.achievements.map((ach, index) => `
+                            <div class="mb-4 last:mb-0 border border-gray-200 rounded-lg p-4 bg-gray-50 hover:shadow-md transition duration-300 transform hover:-translate-y-1">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center">
+                                        <div class="w-20 h-20 mr-4 flex-shrink-0 cursor-pointer p-2 bg-white rounded-lg shadow-sm"
+                                            onclick="renderDetailsPage('Achievements', cvData.achievements[${index}], 'achievements-section')">
+                                            <img
+                                                src="${ach.logo || 'https://placehold.co/80x80/ADD8E6/000000'}"
+                                                alt="${ach.organization} logo"
+                                                class="w-full h-full object-contain"
+                                                onerror="this.onerror=null; this.src='https://placehold.co/80x80/ADD8E6/000000';"
+                                            />
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-semibold text-gray-900 cursor-pointer hover:text-blue-600 transition duration-300 hover:translate-x-1"
+                                                onclick="renderDetailsPage('Achievements', cvData.achievements[${index}], 'achievements-section')">
+                                                ${ach.title}
+                                            </h3>
+                                            <p class="text-md text-gray-600">${ach.organization}</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-md text-gray-600">${ach.years}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Credentials Section -->
+                    <div id="certificates-section" class="bg-white p-8 rounded-xl shadow-lg mb-8 border border-gray-100">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4 flex items-center">
+                            <i data-lucide="key" class="w-8 h-8 mr-3 text-blue-500"></i> Credentials
+                        </h2>
+                        <div class="border-b-2 border-blue-300 w-24 mb-6"></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${cvData.certificates.map(cert => `
+                                <div class="flex flex-col items-center text-center p-6 border border-gray-200 rounded-lg shadow-sm bg-gray-50 hover:shadow-md transition duration-300 transform hover:-translate-y-1 cursor-pointer"
+                                    onclick="renderDetailsPage('Certificates', cvData.certificates.find(c => c.id === '${cert.id}'), 'certificates-section')">
+                                    <img
+                                        src="${cert.logo || 'https://placehold.co/100x100/ADD8E6/000000?text=Cert'}"
+                                        alt="${cert.title} logo"
+                                        class="w-28 h-28 object-contain mx-auto mb-4 p-2 bg-white rounded-full shadow-inner"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/112x112/ADD8E6/000000?text=Cert';"
+                                    />
+                                    <h3 class="text-lg font-semibold text-gray-900 hover:text-blue-600 transition duration-300">
+                                        ${cert.title}
+                                    </h3>
+                                    <p class="text-sm text-gray-600">${cert.issuer}${cert.year ? `, ${cert.year}` : ''}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Software Section -->
+                    <div id="software-section" class="bg-white p-8 rounded-xl shadow-lg mb-8 border border-gray-100">
+                        <h2 class="text-3xl font-bold text-blue-600 mb-4 flex items-center">
+                            <i data-lucide="monitor" class="w-8 h-8 mr-3 text-blue-500"></i> Software
+                        </h2>
+                        <div class="border-b-2 border-blue-300 w-24 mb-6"></div>
+                        <div class="flex flex-wrap gap-3 justify-center md:justify-start">
+                            ${cvData.software.sort().map(item => `
+                                <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-md font-medium shadow-sm hover:bg-blue-200 transition duration-300">
+                                    ${item}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Connect with Me Section -->
+                <section id="connect-section" class="w-full max-w-4xl bg-gradient-to-br from-purple-100 to-purple-200 p-8 rounded-xl shadow-lg border border-purple-300 mt-12">
+                    <h2 class="text-4xl font-extrabold text-purple-800 mb-6 text-center flex items-center justify-center">
+                        <i data-lucide="message-square" class="w-10 h-10 mr-4 text-purple-600"></i> Connect
+                    </h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Contact Information -->
+                        <div class="bg-white p-6 rounded-lg shadow-md space-y-4 border border-gray-200">
+                            <div class="flex items-center space-x-4">
+                                <div class="p-3 bg-purple-100 rounded-full">
+                                    <i data-lucide="mail" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Mail</p>
+                                    <a href="mailto:${cvData.contact.email}" class="text-lg font-semibold text-purple-700 hover:underline">${cvData.contact.email}</a>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <div class="p-3 bg-purple-100 rounded-full">
+                                    <i data-lucide="map-pin" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Location</p>
+                                    <p class="text-lg font-semibold text-purple-700">${cvData.contact.location}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Message Form (Formsubmit Integration) -->
+                        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Send me a message</h3>
+                            <form action="https://formsubmit.co/abir.157shanto@gmail.com" method="POST" class="space-y-4">
+                                <div>
+                                    <label for="name" class="sr-only">Name</label>
+                                    <input type="text" id="name" name="name" placeholder="Name" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500" required>
+                                </div>
+                                <div>
+                                    <label for="email" class="sr-only">Email</label>
+                                    <input type="email" id="email" name="email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500" required>
+                                </div>
+                                <div>
+                                    <label for="message" class="sr-only">Message</label>
+                                    <textarea id="message" name="message" rows="4" placeholder="Message" class="w-full p-3 border border-gray-300 rounded-md focus:ring-purple-500 focus:border-purple-500" required></textarea>
+                                </div>
+                                <button type="submit" class="w-full px-6 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 transition duration-300 flex items-center justify-center">
+                                    Send <i data-lucide="send" class="w-5 h-5 ml-2"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Social Media Links Section - Moved Here -->
+                    <div class="mt-8 flex flex-col items-center">
+                        <div class="flex justify-center space-x-6">
+                            <a href="https://${cvData.contact.facebook}" target="_blank" class="flex flex-col items-center text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
+                                <img src="fb.png" alt="Facebook Logo" class="w-12 h-12 rounded-full shadow-md mb-1" onerror="this.onerror=null; this.src='https://placehold.co/48x48/ADD8E6/000000?text=FB';">
+                                <span class="text-sm font-medium">Facebook</span>
+                            </a>
+                            <a href="http://${cvData.contact.linkedin}" target="_blank" class="flex flex-col items-center text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
+                                <img src="link.png" alt="LinkedIn Logo" class="w-12 h-12 rounded-full shadow-md mb-1" onerror="this.onerror=null; this.src='https://placehold.co/48x48/ADD8E6/000000?text=LI';">
+                                <span class="text-sm font-medium">LinkedIn</span>
+                            </a>
+                            <a href="mailto:${cvData.contact.email}" class="flex flex-col items-center text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
+                                <img src="email.png" alt="Email Logo" class="w-12 h-12 rounded-full shadow-md mb-1" onerror="this.onerror=null; this.src='https://placehold.co/48x48/ADD8E6/000000?text=EM';">
+                                <span class="text-sm font-medium">Email</span>
+                            </a>
+                            <a href="tel:${cvData.contact.phone}" class="flex flex-col items-center text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
+                                <img src="phn.png" alt="Phone Logo" class="w-12 h-12 rounded-full shadow-md mb-1" onerror="this.onerror=null; this.src='https://placehold.co/48x48/ADD8E6/000000?text=PH';">
+                                <span class="text-sm font-medium">Phone</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            `;
+
+            // After rendering, create Lucide icons
+            console.log("Attempting to create Lucide icons...");
+            if (typeof lucide !== 'undefined' && lucide.createIcons) {
+                lucide.createIcons();
+                console.log("Lucide icons created successfully.");
+            } else {
+                console.error("Lucide object or createIcons method not found.");
+            }
+
+            // Show the hamburger button and top navigation buttons on the home page
+            hamburgerButton.style.display = 'flex';
+            topNavButtonsContainer.style.display = 'flex'; // Show top navigation buttons
+
+            // Populate top navigation buttons (Notable Mentions re-added to sidebar)
+            topNavButtonsContainer.innerHTML = `
+                <a href="#education-section" class="top-nav-button" onclick="scrollToSection('education-section')">Education</a>
+                <a href="#experience-section" class="top-nav-button" onclick="scrollToSection('experience-section')">Experience</a>
+                <a href="#achievements-section" class="top-nav-button" onclick="scrollToSection('achievements-section')">Involvements</a>
+                <a href="#certificates-section" class="top-nav-button" onclick="scrollToSection('certificates-section')">Credentials</a>
+            `;
+
+
+            // Scroll to the specified section if an ID is provided
+            if (scrollToId) {
+                setTimeout(() => { // Use setTimeout to ensure rendering is complete
+                    const targetElement = document.getElementById(scrollToId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100); // Small delay to allow DOM to render
+            }
+        }
+
+        // Function to render the Notable Mentions Page
+        function renderNotableMentionsPage() {
+            window.scrollTo(0, 0); // Scroll to top
+
+            appContainer.innerHTML = `
+                <div class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-lg mb-8">
+                    <button
+                        id="backButton"
+                        class="mb-6 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 flex items-center"
+                        onclick="renderHomePage()"
+                    >
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        Back to Home
+                    </button>
+                    <h2 class="text-3xl font-bold text-blue-600 mb-4 flex items-center">
+                        <i data-lucide="star" class="w-8 h-8 mr-3 text-blue-500"></i> Notable Mentions
+                    </h2>
+                    <div class="border-b-2 border-blue-300 w-24 mb-6"></div>
+                    <div class="space-y-4">
+                        ${cvData.notableMentions.map((mention, index) => `
+                            <div class="border border-gray-200 rounded-lg bg-gray-50 overflow-hidden shadow-sm">
+                                <div class="flex items-center justify-between p-4 cursor-pointer hover:bg-blue-50 transition duration-300"
+                                    onclick="toggleNotableMention('notable-mention-content-${index}', 'arrow-icon-${index}')">
+                                    <div class="flex items-center">
+                                        <!-- Removed image placeholder as requested -->
+                                        <div>
+                                            <h3 class="text-xl font-semibold text-gray-900">${mention.title}</h3>
+                                            <p class="text-md text-gray-600">${mention.organizer}</p>
+                                        </div>
+                                    </div>
+                                    <svg class="w-6 h-6 text-gray-600 transform transition-transform duration-300"
+                                        id="arrow-icon-${index}" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                </div>
+                                <div id="notable-mention-content-${index}" class="hidden p-4 border-t border-gray-200 bg-white">
+                                    <p class="text-gray-700 mb-4 leading-relaxed">${mention.description.replace(/\n/g, '<br>')}</p>
+                                    ${mention.link && mention.link !== '#' ? `
+                                        <a href="${mention.link}" target="_blank" class="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300">
+                                            View Source
+                                            <svg class="-mr-1 ml-2 h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                                <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                                                <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
+                                            </svg>
+                                        </a>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            // Hide hamburger and top nav buttons when on Notable Mentions page
+            hamburgerButton.style.display = 'none';
+            topNavButtonsContainer.style.display = 'none';
+            lucide.createIcons(); // Re-create icons for the newly rendered content
+        }
+
+
+        // Function to render the Details Page (remains mostly the same for other sections)
+        function renderDetailsPage(sectionTitle, data, originSectionId) {
+            // Scroll to the top of the page when a details page is rendered
+            window.scrollTo(0, 0);
+
+            let detailsContent = '';
+
+            // This function is responsible for updating dynamic content within the details page.
+            // It is called after the main structure of the details page is rendered.
+            const updateDetailsContent = (sectionIndex) => {
+                if (data.details && data.details.sections && Array.isArray(data.details.sections)) {
+                    let currentSectionData = data.details.sections[sectionIndex];
+                    let sectionHtml = '';
+                    let targetDynamicContentArea = null;
+
+                    // Determine which dynamic content area to update based on the data.id
+                    if (data.id === 'sheba_bondhu') {
+                        targetDynamicContentArea = document.getElementById('sheba-bondhu-dynamic-content');
+                        // Build sectionHtml based on currentSectionData for Sheba Bondhu
+                        if (currentSectionData.content.introduction) {
+                            sectionHtml = `
+                                <div>
+                                    <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                    <div class="border border-gray-300 rounded-lg p-4">
+                                        <p class="text-md text-gray-700 leading-relaxed">
+                                            ${currentSectionData.content.introduction.replace('Sheba Platform LTD', `<a href="${currentSectionData.content.organizationLink}" target="_blank" class="text-blue-600 hover:underline">Sheba Platform LTD</a>`)}
+                                        </p>
+                                    </div>
+                                </div>
+                            `;
+                        } else if (currentSectionData.content.points) {
+                            sectionHtml = `
+                                <div>
+                                    <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                    <div class="border border-gray-300 rounded-lg p-4">
+                                        <ul class="list-disc list-inside text-gray-700 ml-4 space-y-2">
+                                            ${currentSectionData.content.points.map(point => `<li>${point}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    } else if (data.id === 'event_manager') {
+                        targetDynamicContentArea = document.getElementById('event-manager-dynamic-content');
+                        // Build sectionHtml for Event Manager
+                        sectionHtml = `
+                            <div class="mt-6 space-y-4">
+                                ${currentSectionData.content.text ? `
+                                    <div>
+                                        <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <p class="text-md text-gray-700 leading-relaxed">
+                                                ${currentSectionData.content.text}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${currentSectionData.content.points ? `
+                                    <div>
+                                        <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <ul class="list-disc list-inside text-gray-700 ml-4 space-y-2">
+                                                ${currentSectionData.content.points.map(point => `<li>${point}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                        // Specific logic for Event Manager photo visibility
+                        const photoWrapper = document.getElementById('event-manager-photo-wrapper');
+                        if (photoWrapper) {
+                            photoWrapper.style.display = (sectionIndex === 0) ? 'block' : 'none';
+                        }
+                    } else if (data.id === 'general_member_bup_finance') {
+                        targetDynamicContentArea = document.getElementById('general-member-dynamic-content-area');
+                        const leftColumnImage = document.getElementById('general-member-left-column-image');
+                        const rightColumn = document.getElementById('general-member-right-column');
+                        const memberSinceBox = document.getElementById('general-member-member-since-box');
+
+                        // Control visibility of image and member since box
+                        if (sectionIndex === 0) {
+                            if (leftColumnImage) leftColumnImage.style.display = 'flex';
+                            if (memberSinceBox) memberSinceBox.style.display = 'block';
+                            if (rightColumn) {
+                                rightColumn.classList.remove('w-full');
+                                rightColumn.classList.add('md:w-2/3');
+                            }
+                        } else {
+                            if (leftColumnImage) leftColumnImage.style.display = 'none';
+                            if (memberSinceBox) memberSinceBox.style.display = 'none'; // Hide on subsequent pages
+                            if (rightColumn) {
+                                rightColumn.classList.remove('md:w-2/3');
+                                rightColumn.classList.add('w-full'); // Make full width
+                            }
+                        }
+
+                        // Build sectionHtml for General Member BUP Finance
+                        sectionHtml = `
+                            <div class="mt-6 space-y-4">
+                                ${currentSectionData.content.text ? `
+                                    <div>
+                                        <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <p class="text-md text-gray-700 leading-relaxed">
+                                                ${currentSectionData.content.text}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                                ${currentSectionData.content.points ? `
+                                    <div>
+                                        <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <ul class="list-disc list-inside text-gray-700 ml-4 space-y-2">
+                                                ${currentSectionData.content.points.map(point => `<li>${point}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    } else if (data.id === 'joint_secretary_rcbc') {
+                        targetDynamicContentArea = document.getElementById('joint-secretary-dynamic-content-area');
+                        // Build sectionHtml for Joint Secretary RCBC
+                        if (sectionIndex === 0) { // For the first section (Overview)
+                            sectionHtml = `
+                                <div class="flex flex-col lg:flex-row gap-6">
+                                    <div class="lg:w-1/2 space-y-4">
+                                        <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <p class="text-md text-gray-700 leading-relaxed">
+                                                ${currentSectionData.content.text}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="lg:w-1/2 flex flex-col items-center">
+                                        <!-- Carousel for images -->
+                                        <div class="carousel-container">
+                                            <div class="carousel-track" id="joint-secretary-carousel-track">
+                                                ${data.details.images.map(imgSrc => `
+                                                    <div class="carousel-slide">
+                                                        <img src="${imgSrc}" alt="Joint Secretary Image" onerror="this.onerror=null; this.src='https://placehold.co/400x256/ADD8E6/000000?text=Image+Placeholder';" onclick="zoomInImage('${imgSrc}')">
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                        <div class="carousel-dot-container" id="joint-secretary-carousel-dots">
+                                            ${data.details.images.map((_, index) => `
+                                                <span class="carousel-dot" onclick="setSlide(${index}, cvData.achievements.find(ach => ach.id === 'joint_secretary_rcbc').details.images)"></span>
+                                            `).join('')}
+                                        </div>
+                                        <p class="text-center text-sm text-gray-500 mt-2">Click image to view full photo</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else { // For subsequent sections (Key Responsibilities)
+                            sectionHtml = `
+                                <div class="mt-6 space-y-4">
+                                    <div>
+                                        <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            ${currentSectionData.content.text ? `<p class="text-md text-gray-700 leading-relaxed">${currentSectionData.content.text}</p>` : ''}
+                                            ${currentSectionData.content.points ? `
+                                                <ul class="list-disc list-inside text-gray-700 ml-4 space-y-2">
+                                                    ${currentSectionData.content.points.map(point => `<li>${point}</li>`).join('')}
+                                                </ul>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    } else if (data.id === 'college_sergeant') {
+                        targetDynamicContentArea = document.getElementById('college-sergeant-dynamic-content-area');
+                        // Build sectionHtml for College Sergeant
+                        if (sectionIndex === 0) {
+                            sectionHtml = `
+                                <div class="flex flex-col lg:flex-row gap-6">
+                                    <div class="lg:w-1/2 space-y-4">
+                                        <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            <p class="text-md text-gray-700 leading-relaxed">
+                                                ${currentSectionData.content.text}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="lg:w-1/2 flex flex-col items-center">
+                                        <!-- Carousel for images -->
+                                        <div class="carousel-container">
+                                            <div class="carousel-track" id="college-sergeant-carousel-track">
+                                                ${data.details.images.map(imgSrc => `
+                                                    <div class="carousel-slide">
+                                                        <img src="${imgSrc}" alt="College Sergeant Image" onerror="this.onerror=null; this.src='https://placehold.co/400x256/ADD8E6/000000?text=Image+Placeholder';" onclick="zoomInImage('${imgSrc}')">
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                        <div class="carousel-dot-container" id="college-sergeant-carousel-dots">
+                                            ${data.details.images.map((_, index) => `
+                                                <span class="carousel-dot" onclick="setSlide(${index}, cvData.achievements.find(ach => ach.id === 'college_sergeant').details.images)"></span>
+                                            `).join('')}
+                                        </div>
+                                        <p class="text-center text-sm text-gray-500 mt-2">Click image to view full photo</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            sectionHtml = `
+                                <div class="mt-6 space-y-4">
+                                    <div>
+                                        <h4 class="text-2xl font-bold text-gray-900 mb-2">${currentSectionData.heading}</h4>
+                                        <div class="border border-gray-300 rounded-lg p-4">
+                                            ${currentSectionData.content.text ? `<p class="text-md text-gray-700 leading-relaxed">${currentSectionData.content.text}</p>` : ''}
+                                            ${currentSectionData.content.points ? `
+                                                <ul class="list-disc list-inside text-gray-700 ml-4 space-y-2">
+                                                    ${currentSectionData.content.points.map(point => `<li>${point}</li>`).join('')}
+                                                </ul>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    } else if (data.id === 'ms_excel_cert' || data.id === 'data_analytics_cert') { // New condition for Certificates details
+                        targetDynamicContentArea = document.getElementById('certificate-dynamic-content-area');
+
+                        // Determine the icon based on the certificate ID
+                        let iconSvg = '';
+                        if (data.id === 'ms_excel_cert') {
+                            iconSvg = `<i data-lucide="file-spreadsheet" class="w-16 h-16 mr-3 text-blue-500"></i>`;
+                        } else if (data.id === 'data_analytics_cert') {
+                            iconSvg = `<i data-lucide="line-chart" class="w-16 h-16 mr-3 text-blue-500"></i>`;
+                        }
+
+                        // Reconstruct sectionHtml based on the new format from image_11a6bf.jpg
+                        sectionHtml = `
+                            <div class="flex flex-col items-center p-4">
+                                <!-- Top Row: Cert Box (now icon) and Verify Button -->
+                                <div class="flex items-center justify-between w-full max-w-sm mb-6">
+                                    <div class="w-24 h-24 bg-blue-200 rounded-lg flex items-center justify-center text-gray-800 text-xl font-bold shadow-md">
+                                        ${iconSvg}
+                                    </div>
+                                    <button id="certificate-verify-button" class="px-6 py-2 border border-gray-400 text-gray-700 font-semibold rounded-lg shadow-sm hover:bg-gray-100 transition duration-300">
+                                        Verify Certificate
+                                    </button>
+                                </div>
+
+                                <!-- Title and Issuer -->
+                                <div class="w-full max-w-sm text-left mb-6">
+                                    <h3 class="text-2xl font-extrabold text-gray-900 mb-1">${data.title}</h3>
+                                    <p class="text-lg text-gray-700">${data.issuer}</p>
+                                </div>
+
+                                <!-- What did I learn section (as per image_11b562.jpg, re-added based on user's previous request) -->
+                                <div class="w-full max-w-sm bg-white p-6 rounded-lg shadow-md mb-6">
+                                    <h4 class="text-xl font-bold text-gray-900 mb-3">What did I learn</h4>
+                                    <ul class="list-disc list-inside text-gray-700 ml-4 space-y-2">
+                                        ${data.details.sections.find(s => s.heading === "Key Learning Outcomes").content.points.map(point => `<li>${point}</li>`).join('')}
+                                    </ul>
+                                </div>
+
+                                <!-- My work section (as per image_11b562.jpg, re-added based on user's previous request) -->
+                                <div class="w-full max-w-sm bg-white p-6 rounded-lg shadow-md">
+                                    <h4 class="text-xl font-bold text-gray-900 mb-3">My work</h4>
+                                    <div class="p-4 bg-gray-100 text-gray-500 italic text-center rounded-md border border-gray-200">
+                                        <p>${data.details.sections.find(s => s.heading === "Projects/Work Samples").content.text}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    // Notable Mentions detail page logic is removed as it's now handled on the home page.
+                    // This `else if` block for `Notable Mentions` and `Individual Notable Mention` is removed.
+
+
+                    if (targetDynamicContentArea) {
+                        targetDynamicContentArea.innerHTML = sectionHtml;
+                        // After rendering, create Lucide icons for the details page
+                        lucide.createIcons();
+                        // Add event listener for the "Verify Certificate" button if it exists
+                        const verifyButton = document.getElementById('certificate-verify-button');
+                        if (verifyButton) {
+                            verifyButton.addEventListener('click', () => {
+                                window.open(data.link, '_blank');
+                            });
+                        }
+                    }
+
+                    // Update dot indicators (only if sections exist)
+                    const dotsContainer = document.getElementById('dots-container');
+                    if (dotsContainer && data.details && data.details.sections && Array.isArray(data.details.sections)) {
+                        dotsContainer.innerHTML = data.details.sections.map((_, idx) => `
+                            <span class="dot w-4 h-4 rounded-full mx-1 cursor-pointer transition-colors duration-300 ${idx === sectionIndex ? 'bg-blue-600' : 'border border-blue-600 bg-transparent'}"
+                                onclick="window.currentDetailsPageUpdater(${idx})"></span>
+                        `).join('');
+                    }
+                } else {
+                     // This block handles rendering for simple lists like Software, Language
+                    detailsContent = `
+                        <ul class="list-disc list-inside text-xl text-gray-700 space-y-2">
+                            ${data.map(item => `<li class="p-2 bg-gray-500 rounded-md shadow-sm">${item}</li>`).join('')}
+                        </ul>
+                    `;
+                }
+            };
+
+            // Make the updater function globally accessible for this specific details page
+            // This allows pagination dots to call it directly.
+            window.currentDetailsPageUpdater = updateDetailsContent;
+
+            // Main structure of the details page (same as before)
+            if (sectionTitle === 'Education') {
+                const isBUP = data.id === 'bup';
+                const isRajuk = data.id === 'rajuk';
+
+                detailsContent = `
+                    <div class="space-y-6">
+                        ${isRajuk ? `
+                            <div class="bg-blue-100 p-6 rounded-lg shadow-md flex items-center mb-6">
+                                <img
+                                    src="${data.logo}"
+                                    alt="${data.institution} logo"
+                                    class="w-16 h-16 mr-4 object-contain"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000';"
+                                />
+                                <h3 class="text-3xl font-extrabold text-blue-800">${data.institution}</h3>
+                            </div>
+                            <div class="flex flex-wrap justify-center gap-6">
+                                <div class="bg-white p-8 rounded-xl shadow-lg text-center flex-1 min-w-[280px] max-w-sm">
+                                    <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-blue-100 flex items-center justify-center shadow-inner">
+                                        <h4 class="text-4xl font-extrabold text-blue-800">HSC</h4>
+                                    </div>
+                                    <p class="text-xl text-gray-700 mb-2">GPA: 5.00 (out of 5.00)</p>
+                                    <p class="text-xl text-gray-700 mb-2">Group: Business Studies</p>
+                                    <p class="text-xl text-gray-700 mb-4">Passing Year: 2022</p>
+                                    <p class="text-lg text-gray-600 italic">*Stood 129th in Dhaka board</p>
+                                </div>
+                                <div class="bg-white p-8 rounded-xl shadow-lg text-center flex-1 min-w-[280px] max-w-sm">
+                                    <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-purple-100 flex items-center justify-center shadow-inner">
+                                        <h4 class="text-4xl font-extrabold text-purple-800">SSC</h4>
+                                    </div>
+                                    <p class="text-xl text-gray-700 mb-2">GPA: 5.00 (out of 5.00)</p>
+                                    <p class="text-xl text-gray-700 mb-2">Group: Business Studies</p>
+                                    <p class="text-xl text-gray-700 mb-4">Passing Year: 2020</p>
+                                    <p class="text-lg text-gray-600 italic">*Stood 34th in Dhaka board</p>
+                                </div>
+                            </div>
+                        ` : `
+                            <div class="bg-blue-100 p-6 rounded-lg shadow-md flex items-center mb-6">
+                                <img
+                                    src="gen.png"
+                                    alt="${data.institution} logo"
+                                    class="w-16 h-16 mr-4 object-contain"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000';"
+                                />
+                                <h3 class="text-3xl font-extrabold text-blue-800">${data.institution}</h3>
+                            </div>
+                            <div class="bg-white p-8 rounded-xl shadow-lg">
+                                <p class="text-lg text-gray-700">${data.details[0]}</p> <!-- Bachelor of Business Administration - General -->
+                                <div class="flex items-center justify-between w-full mt-4">
+                                    <div class="flex items-center space-x-4">
+                                        <p class="text-lg text-gray-700 font-bold">Major: <span class="inline-block border border-gray-400 px-2 py-1 rounded">N/A</span></p>
+                                        <p class="text-lg text-gray-700 font-bold">Minor: <span class="inline-block border border-gray-400 px-2 py-1 rounded">N/A</span></p>
+                                    </div>
+                                    <p class="text-lg text-gray-700 font-bold">Total CGPA: <span class="inline-block border border-gray-400 px-2 py-1 rounded">${data.details[1].split(':')[1].trim()}</span></p>
+                                </div>
+                                <div class="mt-4 space-y-2">
+                                    ${data.details.slice(2).map((semesterData, index) => `
+                                        <div class="group">
+                                            <div class="flex items-center cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300" onclick="toggleCourses(this, 'semester-${data.id}-${index}')">
+                                                <svg class="w-5 h-5 mr-2 transform transition-transform duration-300 group-hover:rotate-90" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                                                <span class="text-lg font-medium flex-grow">${semesterData.semester} CGPA:</span>
+                                                <span class="text-lg font-medium text-right w-16">${semesterData.cgpa}</span>
+                                            </div>
+                                            <div id="semester-${data.id}-${index}" class="course-list hidden pl-8 pt-2 space-y-1 text-gray-700">
+                                                <!-- Course list will be populated here -->
+                                                ${semesterData.courses.length > 0 ? `
+                                                    <div class="overflow-x-auto">
+                                                        <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+                                                            <thead>
+                                                                <tr class="bg-gray-100 border-b">
+                                                                    <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Code</th>
+                                                                    <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Course Name</th>
+                                                                    <th class="py-2 px-4 text-left text-sm font-semibold text-gray-600">Credit</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                ${semesterData.courses.map(course => `
+                                                                    <tr class="border-b last:border-b-0">
+                                                                        <td class="py-2 px-4 text-sm text-gray-800">${course.code}</td>
+                                                                        <td class="py-2 px-4 text-sm text-gray-800">${course.name}</td>
+                                                                        <td class="py-2 px-4 text-sm text-gray-800">${course.credit}</td>
+                                                                    </tr>
+                                                                `).join('')}
+                                                                <tr class="bg-gray-50">
+                                                                    <td colspan="2" class="py-2 px-4 text-right text-sm font-semibold text-gray-700">Total Credit:</td>
+                                                                    <td class="py-2 px-4 text-left text-sm font-bold text-gray-900">${semesterData.totalCredit}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                ` : `<p>No courses available yet.</p>`}
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `}
+                    </div>
+                `;
+            } else if (sectionTitle === 'Experience') {
+                // Check if it's the specific Sheba Bondhu experience
+                if (data.id === 'sheba_bondhu') {
+                    detailsContent = `
+                        <!-- Top Title and Heading Box -->
+                        <div class="bg-blue-100 p-6 rounded-lg shadow-md flex items-center mb-6">
+                            <div class="w-16 h-16 mr-4 flex-shrink-0 bg-white rounded-lg flex items-center justify-center border border-blue-200">
+                                <img
+                                    src="${data.logo || 'https://placehold.co/64x64/ADD8E6/000000'}"
+                                    alt="${data.organization} logo"
+                                    class="w-full h-full object-contain"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000';"
+                                />
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-extrabold text-blue-800">${data.organization}</h3>
+                                <p class="text-xl text-blue-700">${data.title}</p>
+                            </div>
+                        </div>
+
+                        <!-- Two-column layout for content -->
+                        <div class="w-full bg-white rounded-xl shadow-lg p-6">
+                            <div class="flex flex-col md:flex-row gap-6">
+                                <!-- Left Column: Photo -->
+                                <div class="md:w-1/3 flex flex-col justify-center items-center p-4">
+                                    <a href="${data.details.linkedinPostLink}" target="_blank" class="w-48 h-64 border border-gray-300 flex items-center justify-center text-gray-500 text-xl rounded-lg overflow-hidden">
+                                        <img src="${data.details.image}" alt="Sheba Bondhu Photo Placeholder" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/192x256/E0E0E0/666666?text=Photo';">
+                                    </a>
+                                    <p class="text-center text-sm text-gray-500 mt-2">Click the image to view the LinkedIn post!</p>
+                                </div>
+                                <div id="sheba-bondhu-dynamic-content" class="md:w-2/3 space-y-4">
+                                    <!-- Dynamic content loaded here by updateDetailsContent -->
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dots-container" class="flex justify-end mt-6">
+                            <!-- Dots will be rendered here -->
+                        </div>
+                    `;
+                } else if (data.id === 'event_manager') { // New condition for Event Manager
+                    detailsContent = `
+                        <div class="bg-green-100 p-6 rounded-lg shadow-md flex items-center mb-6">
+                            <img
+                                src="${data.logo || 'https://placehold.co/64x64/ADD8E6/000000'}"
+                                alt="${data.organization} logo"
+                                class="w-16 h-16 mr-4 object-contain"
+                                onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000';"
+                            />
+                            <div>
+                                <h3 class="text-3xl font-extrabold text-green-800">${data.organization}</h3>
+                                <p class="text-xl text-green-700">${data.title}</p>
+                            </div>
+                        </div>
+                        <div class="w-full bg-white rounded-xl shadow-lg p-6">
+                            <div class="carousel-container">
+                                <div class="carousel-track" id="event-manager-carousel-track">
+                                    ${data.details.images.map(imgSrc => `
+                                        <div class="carousel-slide">
+                                            <img src="${imgSrc}" alt="Event Manager Image" onerror="this.onerror=null; this.src='https://placehold.co/400x256/ADD8E6/000000?text=Image+Placeholder';" onclick="zoomInImage('${imgSrc}')">
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            <div class="carousel-dot-container" id="event-manager-carousel-dots">
+                                ${data.details.images.map((_, index) => `
+                                    <span class="carousel-dot" onclick="setSlide(${index}, cvData.experience.find(exp => exp.id === 'event_manager').details.images)"></span>
+                                `).join('')}
+                            </div>
+                            <p class="text-center text-sm text-gray-500 mt-2">Click image to view full photo</p>
+                            <div id="event-manager-dynamic-content" class="overflow-y-auto max-h-[calc(100vh-250px)]">
+                                <!-- Content will be loaded here by updateDetailsContent -->
+                            </div>
+                            <div id="dots-container" class="flex justify-end mt-6">
+                                <!-- Dots will be rendered here -->
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // Fallback for other experience entries (though currently none exist)
+                    detailsContent = `
+                        <div class="space-y-6">
+                            <div class="p-6 bg-gray-50 rounded-lg shadow-sm">
+                                <h3 class="2xl font-semibold text-gray-900 mb-1">${data.title}</h3>
+                                <p class="text-lg text-gray-600 mb-2">${data.organization} | ${data.years}</p>
+                                <ul class="list-disc list-inside text-gray-700 ml-6 space-y-1">
+                                    ${data.map(detail => `<li>${detail}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                }
+            } else if (sectionTitle === 'Achievements') { // New condition for Achievements
+                // This section now handles achievement objects with details
+                if (data.id === 'general_member_bup_finance') { // New condition for General Member
+                    detailsContent = `
+                        <!-- Top Title and Heading Box -->
+                        <div class="bg-purple-100 p-6 rounded-lg shadow-md flex items-center mb-6">
+                            <div class="w-16 h-16 mr-4 flex-shrink-0 bg-white rounded-lg flex items-center justify-center border border-purple-200">
+                                <img
+                                    src="${data.logo || 'https://placehold.co/64x64/ADD8E6/000000'}"
+                                    alt="${data.organization} logo"
+                                    class="w-full h-full object-contain"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000';"
+                                />
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-extrabold text-purple-800">${data.organization}</h3>
+                                <p class="text-xl text-purple-700">${data.title}</p>
+                            </div>
+                        </div>
+
+                        <!-- Main content area with two columns -->
+                        <div class="w-full bg-white rounded-xl shadow-lg p-6">
+                            <div id="general-member-content-flex-container" class="flex flex-col md:flex-row gap-6">
+                                <!-- Left Column: Photo -->
+                                <div id="general-member-left-column-image" class="md:w-1/3 flex flex-col justify-center items-center p-4 relative">
+                                    <a href="https://${data.details.link}" target="_blank" class="w-48 h-64 border border-gray-300 flex flex-col items-center justify-center text-gray-500 text-xl rounded-lg overflow-hidden">
+                                        <img src="${data.details.image}" alt="BUP Finance Society Photo" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/192x256/E0E0E0/666666?text=Photo';">
+                                        <span class="text-center text-blue-600 hover:underline text-sm font-semibold mt-2">Click to verify</span>
+                                    </a>
+                                </div>
+                                <!-- Right Column: Dynamic Content and Member Since Box -->
+                                <div id="general-member-right-column" class="md:w-2/3 space-y-4">
+                                    <!-- Member Since Box - This will be conditionally displayed by JS -->
+                                    <div id="general-member-member-since-box" class="bg-blue-50 p-4 rounded-lg shadow-sm text-center">
+                                        <p class="text-lg font-semibold text-blue-800">Member Since: ${data.details.joiningDate}</p>
+                                    </div>
+                                    <div id="general-member-dynamic-content-area">
+                                        <!-- Section content will be loaded here by updateDetailsContent -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dots-container" class="flex justify-end mt-6">
+                            <!-- Dots will be rendered here -->
+                        </div>
+                    `;
+                } else if (data.id === 'joint_secretary_rcbc') {
+                    detailsContent = `
+                        <div class="bg-blue-100 p-6 rounded-lg shadow-md flex items-center mb-6">
+                            <div class="w-16 h-16 mr-4 flex-shrink-0 bg-white rounded-lg flex items-center justify-center border border-blue-200">
+                                <img
+                                    src="${data.logo || 'https://placehold.co/64x64/ADD8E6/000000'}"
+                                    alt="${data.organization} logo"
+                                    class="w-full h-full object-contain"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000';"
+                                />
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-extrabold text-blue-800">${data.organization}</h3>
+                                <p class="text-xl text-blue-700">${data.title}</p>
+                            </div>
+                        </div>
+                        <div class="w-full bg-white rounded-xl shadow-lg p-6 relative">
+                            <!-- Joint Secretary Heading -->
+                            <h3 class="text-3xl font-extrabold text-blue-800 mb-4">${data.title}</h3>
+
+                            <div class="flex flex-col lg:flex-row gap-6">
+                                <div id="joint-secretary-dynamic-content-area" class="lg:w-full space-y-4">
+                                    <!-- Content for each page will be rendered here -->
+                                </div>
+                            </div>
+
+                            <!-- View Certification Button (fixed at bottom center) -->
+                            <div class="mt-6 flex justify-center w-full">
+                                <a href="${data.details.certificationLink}" target="_blank"
+                                   class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+                                    <svg class="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" clip-rule="evenodd" />
+                                    </svg>
+                                    Verify Certification
+                                </a>
+                            </div>
+
+                            <!-- Pagination Dots (fixed at bottom right) -->
+                            <div id="dots-container" class="absolute bottom-4 right-4 flex justify-end p-2">
+                                <!-- Dots will be rendered here -->
+                            </div>
+                        </div>
+                    `;
+                } else if (data.id === 'college_sergeant') {
+                    detailsContent = `
+                        <div class="bg-blue-100 p-6 rounded-lg shadow-md flex items-center mb-6">
+                            <div class="w-16 h-16 mr-4 flex-shrink-0">
+                                <img
+                                    src="${data.logo || 'https://placehold.co/64x64/ADD8E6/000000'}"
+                                    alt="${data.organization} logo"
+                                    class="w-full h-full object-contain"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/64x64/ADD8E6/000000';"
+                                />
+                            </div>
+                            <div>
+                                <h3 class="text-3xl font-extrabold text-blue-800">${data.organization}</h3>
+                                <p class="text-xl text-blue-700">${data.title}</p>
+                            </div>
+                        </div>
+                        <div class="w-full bg-white rounded-xl shadow-lg p-6 relative">
+                            <!-- College Sergeant Heading -->
+                            <h3 class="text-3xl font-extrabold text-blue-800 mb-4">${data.title}</h3>
+                            <div class="border-b-2 border-blue-300 w-24 mb-4"></div>
+
+                            <!-- Dynamic Content Area - This will be updated by updateDetailsContent -->
+                            <div id="college-sergeant-dynamic-content-area">
+                                <!-- Content for each page will be rendered here -->
+                            </div>
+
+                            <!-- View Certification Button (fixed at bottom center) -->
+                            <div class="mt-6 flex justify-center w-full">
+                                <a href="${data.details.certificationLink}" target="_blank"
+                                   class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300">
+                                    <svg class="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" clip-rule="evenodd" />
+                                    </svg>
+                                    Verify Certification
+                                </a>
+                            </div>
+
+                            <!-- Pagination Dots (fixed at bottom right) -->
+                            <div id="dots-container" class="absolute bottom-4 right-4 flex justify-end p-2">
+                                <!-- Dots will be rendered here -->
+                            </div>
+                        </div>
+                    `;
+                }
+            } else if (sectionTitle === 'Certificates') { // New condition for Certificates details
+                detailsContent = `
+                    <div class="w-full bg-white rounded-xl shadow-lg p-6 relative">
+                        <div id="certificate-dynamic-content-area">
+                            <!-- Dynamic content for certificate sections -->
+                        </div>
+                    </div>
+                `;
+            }
+            // Removed the Notable Mentions detail page rendering logic here.
+            // The notable mentions are now handled directly on the home page with dropdowns.
+
+
+            appContainer.innerHTML = `
+                <div class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-lg mb-8">
+                    <button
+                        id="backButton"
+                        class="mb-6 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300 flex items-center"
+                    >
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                        Back to Home
+                    </button>
+                    <div class="border-b-2 border-blue-300 w-24 mb-4"></div>
+                    ${detailsContent}
+                </div>
+            `;
+
+            // Hide the hamburger button and top navigation buttons on detail pages
+            hamburgerButton.style.display = 'none';
+            topNavButtonsContainer.style.display = 'none'; // Hide top navigation buttons
+
+            // Adjust back button behavior
+            document.getElementById('backButton').addEventListener('click', () => {
+                renderHomePage(originSectionId);
+            });
+
+            // Call updateDetailsContent after the main detailsContent is rendered
+            // This crucial for dynamic content to appear.
+            if (data.details && data.details.sections) {
+                updateDetailsContent(0); // Initialize with the first section
+            }
+
+            // Initialize carousel for Event Manager and Joint Secretary if it exists
+            if (data.id === 'event_manager' || data.id === 'joint_secretary_rcbc' || data.id === 'college_sergeant') { // Added college_sergeant
+                currentSlideIndex = 0; // Reset slide index when rendering the page
+                updateCarousel(data.details.images);
+                startAutoSlide(data.details.images); // Start auto-sliding
+            }
+        }
+
+        // Function to set carousel slide directly
+        function setSlide(index, images) {
+            currentSlideIndex = index;
+            updateCarousel(images);
+            stopAutoSlide(); // Stop auto-slide on manual interaction
+            startAutoSlide(images); // Restart auto-slide after a delay
+        }
+
+        // Make setSlide globally accessible
+        window.setSlide = setSlide;
+
+        // Function to toggle course list visibility
+        function toggleCourses(element, targetId) {
+            const targetDiv = document.getElementById(targetId);
+            if (targetDiv) {
+                targetDiv.classList.toggle('hidden');
+                // Optional: Rotate the arrow icon
+                const arrowIcon = element.querySelector('svg');
+                if (arrowIcon) {
+                    arrowIcon.classList.toggle('rotate-90');
+                }
+            }
+        }
+
+        // Function to show custom message (replaces alert)
+        function showCustomMessage(message, type = 'info') {
+            let messageBox = document.getElementById('customMessageBox');
+            if (!messageBox) {
+                messageBox = document.createElement('div');
+                messageBox.id = 'customMessageBox';
+                messageBox.className = 'fixed bottom-4 right-4 p-4 rounded-lg shadow-lg text-white z-[1000] flex items-center';
+                document.body.appendChild(messageBox);
+            }
+
+            messageBox.innerHTML = `
+                <span class="mr-2">${type === 'success' ? '✅' : '⚠️'}</span>
+                <span>${message}</span>
+            `;
+
+            if (type === 'success') {
+                messageBox.classList.remove('bg-red-500');
+                messageBox.classList.add('bg-green-500');
+            } else if (type === 'error') {
+                messageBox.classList.remove('bg-green-500');
+                messageBox.classList.add('bg-red-500');
+            } else {
+                messageBox.classList.remove('bg-green-500', 'bg-red-500');
+                messageBox.classList.add('bg-blue-500');
+            }
+
+            messageBox.style.display = 'flex';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 5000); // Hide after 5 seconds
+        }
+
+
+        // Make functions globally accessible
+        window.toggleCourses = toggleCourses;
+        window.zoomInImage = zoomInImage;
+        window.zoomOutImage = zoomOutImage;
+        window.closeSidebarAndRenderNotableMentionsPage = closeSidebarAndRenderNotableMentionsPage; // Updated function name
+        // Removed window.sendEmail as Formspree handles submission directly
+        window.scrollToSection = scrollToSection;
+        window.toggleNotableMention = toggleNotableMention; // Make the new function globally accessible
+        window.showCustomMessage = showCustomMessage; // Make custom message function globally accessible
+
+        // Initial render on page load
+        window.onload = renderHomePage;
+
+    </script>
+</body>
+</html>
