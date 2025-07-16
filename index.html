@@ -823,26 +823,56 @@
         // Function to render the Home Page
         function renderHomePage(scrollToId = null) {
             appContainer.innerHTML = `
-                <!-- Introduction Section -->
+                <!-- Introduction Section (Rebuilt to match the 2nd picture layout) -->
                 <header class="text-center mb-12 w-full max-w-4xl bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl shadow-lg border border-blue-200">
-                    <div class="relative w-36 h-36 mx-auto mb-6 rounded-full overflow-hidden border-4 border-blue-500 shadow-xl transform transition-transform duration-300 hover:scale-105">
-                        <a href="https://linkedin.com/in/md-abir-hossain-shanto-45ab12336/" target="_blank" class="block w-full h-full">
-                            <img
-                                src="abir.png"
-                                alt="Profile"
-                                class="w-full h-full object-cover"
-                                onerror="this.onerror=null; this.src='https://placehold.co/144x144/ADD8E6/000000?text=ABIR';"
-                            />
-                        </a>
-                    </div>
-                    <h1 class="text-5xl font-extrabold text-blue-800 mb-2 leading-tight">${cvData.name}</h1>
-                    <p class="text-2xl text-gray-700 mb-6 font-semibold">${cvData.title}</p>
-                    <div class="bg-white p-5 rounded-lg shadow-inner border border-gray-200 mb-6 max-w-2xl mx-auto">
-                        <p class="text-lg text-gray-700 leading-relaxed italic">
-                            "${cvData.careerObjective}"
-                        </p>
+                    <div class="flex flex-col md:flex-row items-center md:justify-between text-left">
+                        <!-- Left Column: Text and Contact Button/Socials -->
+                        <div class="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+                            <p class="text-xl text-gray-700 mb-2">Hi there!</p>
+                            <h1 class="text-5xl font-extrabold text-blue-800 mb-2 leading-tight">I'm ${cvData.name}</h1>
+                            <p class="text-2xl text-gray-700 mb-6 font-semibold">I am a ${cvData.title}</p>
+                            <button class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-300" onclick="scrollToSection('connect-section')">
+                                Contact me
+                            </button>
+                            <div class="flex justify-center md:justify-start space-x-4 mt-6">
+                                <a href="https://${cvData.contact.linkedin}" target="_blank" class="text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
+                                    <img src="link.png" alt="LinkedIn Logo" class="w-10 h-10 rounded-full shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ADD8E6/000000?text=LI';">
+                                </a>
+                                <a href="https://${cvData.contact.facebook}" target="_blank" class="text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
+                                    <img src="fb.png" alt="Facebook Logo" class="w-10 h-10 rounded-full shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ADD8E6/000000?text=FB';">
+                                </a>
+                                <a href="mailto:${cvData.contact.email}" class="text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
+                                    <img src="email.png" alt="Email Logo" class="w-10 h-10 rounded-full shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ADD8E6/000000?text=EM';">
+                                </a>
+                                <a href="tel:${cvData.contact.phone}" class="flex flex-col items-center text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
+                                    <img src="phn.png" alt="Phone Logo" class="w-10 h-10 rounded-full shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ADD8E6/000000?text=PH';">
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Right Column: Profile Picture -->
+                        <div class="md:w-1/2 flex justify-center md:justify-end">
+                            <div class="relative w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-blue-500 shadow-xl transform transition-transform duration-300 hover:scale-105">
+                                <img
+                                    src="abir.png"
+                                    alt="Profile"
+                                    class="w-full h-full object-cover"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/256x256/ADD8E6/000000?text=ABIR';"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </header>
+
+                <!-- Career Objective Section (Moved outside header for new layout) -->
+                <section class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-lg border border-gray-100 mb-8">
+                    <h2 class="text-3xl font-bold text-blue-600 mb-4 flex items-center">
+                        <i data-lucide="target" class="w-8 h-8 mr-3 text-blue-500"></i> Career Objective
+                    </h2>
+                    <div class="border-b-2 border-blue-300 w-24 mb-6"></div>
+                    <p class="text-lg text-gray-700 leading-relaxed italic">
+                        "${cvData.careerObjective}"
+                    </p>
+                </section>
 
                 <!-- Sections -->
                 <section class="w-full max-w-4xl">
