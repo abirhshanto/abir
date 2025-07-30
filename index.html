@@ -409,7 +409,7 @@
         // CV data
         const cvData = {
             name: "MD. ABIR HOSSAIN SHANTO",
-            title: "Business Enthusiast", // Updated title as per image
+            title: "Business Enthusiast",
             contact: {
                 phone: "+8801558194482",
                 email: "abir.157shanto@gmail.com",
@@ -417,7 +417,7 @@
                 facebook: "facebook.com/abirhshanto",
                 location: "Dhaka, Bangladesh"
             },
-            careerObjective: "Motivated business student passionate about leadership, communication, and excellence. Seeking a Campus Ambassador role to promote organizational initiatives, engage peers, and foster brand presence on campus.",
+            careerObjective: "Motivated business student passionate about leadership, communication, and excellence. Seeking a Campus Ambassador role to promote organizational initiatives, engage peers and foster brand presence on campus.",
             education: [
                 {
                     id: 'bup', // Added unique ID for easier referencing
@@ -564,7 +564,7 @@
                 "English (Fluent)",
                 "Bangla (Fluent)"
             ],
-            achievements: [ // Renamed from achievements to involvements
+            achievements: [ // Re-added achievements array
                 {
                     id: 'general_member_bup_finance',
                     title: "General Member",
@@ -668,7 +668,7 @@
                     }
                 }
             ],
-            certificates: [ // Renamed from certificates to credentials
+            certificates: [ // New Certificates section
                 {
                     id: 'ms_excel_cert',
                     title: "Introduction to MS Excel",
@@ -839,20 +839,7 @@
                             <button class="px-8 py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition duration-300" onclick="scrollToSection('connect-section')">
                                 Contact me
                             </button>
-                            <div class="flex justify-center md:justify-start space-x-4 mt-6">
-                                <a href="https://${cvData.contact.linkedin}" target="_blank" class="text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
-                                    <img src="link.png" alt="LinkedIn Logo" class="w-10 h-10 rounded-full shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ADD8E6/000000?text=LI';">
-                                </a>
-                                <a href="https://${cvData.contact.facebook}" target="_blank" class="text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
-                                    <img src="fb.png" alt="Facebook Logo" class="w-10 h-10 rounded-full shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ADD8E6/000000?text=FB';">
-                                </a>
-                                <a href="mailto:${cvData.contact.email}" class="text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
-                                    <img src="email.png" alt="Email Logo" class="w-10 h-10 rounded-full shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ADD8E6/000000?text=EM';">
-                                </a>
-                                <a href="tel:${cvData.contact.phone}" class="flex flex-col items-center text-blue-600 hover:text-blue-800 transition duration-300 transform hover:scale-110">
-                                    <img src="phn.png" alt="Phone Logo" class="w-10 h-10 rounded-full shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/40x40/ADD8E6/000000?text=PH';">
-                                </a>
-                            </div>
+                            <!-- Removed Social Media Links Section from here -->
                         </div>
                         <!-- Right Column: Profile Picture -->
                         <div class="md:w-1/2 flex justify-center md:justify-end">
@@ -868,16 +855,7 @@
                     </div>
                 </header>
 
-                <!-- Career Objective Section (Moved outside header for new layout) -->
-                <section class="w-full max-w-4xl bg-white p-8 rounded-xl shadow-lg border border-gray-100 mb-8">
-                    <h2 class="text-3xl font-bold text-blue-600 mb-4 flex items-center">
-                        <i data-lucide="target" class="w-8 h-8 mr-3 text-blue-500"></i> Career Objective
-                    </h2>
-                    <div class="border-b-2 border-blue-300 w-24 mb-6"></div>
-                    <p class="text-lg text-gray-700 leading-relaxed italic">
-                        "${cvData.careerObjective}"
-                    </p>
-                </section>
+                <!-- Removed Career Objective Section entirely -->
 
                 <!-- Sections -->
                 <section class="w-full max-w-4xl">
